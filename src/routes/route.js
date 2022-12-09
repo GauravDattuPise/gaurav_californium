@@ -15,7 +15,7 @@ router.get('/test-me', function (req, res) {
     // const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     // let result = _.first(days, 4)
     // console.log(`Result from underscore function is ${result}`)
-    // myIntro.myFunction('Gaurav Pise')
+     myIntro.myFunction('Gaurav Pise')
 
     // res.send('any dummy text')
 
@@ -47,7 +47,7 @@ router.get('/test-me', function (req, res) {
     }
     return chunked
 }
-       console.log(chunk(months,3))
+       console.log(chunk(months,4))
 
        //   tail()
        const tailArr = [1,3,5,7,9,11,13,15,17,19];
