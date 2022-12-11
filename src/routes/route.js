@@ -77,9 +77,22 @@ router.get("/shoes", function(req, res){
     res.send("dummy shoes response")
 })
 
+// problem 1
+
+router.get("/movies", function(req,res){
+
+    const movies =['Lal Singh Chadda', 'KGF', 'RRR', 'Bahubali : The Begining', 'Bahubali : The Conclusion']
+       res.send(movies)
+}
+)  
+
+//     problem 2  and  3
+
 router.get("/movies/:indexNumber", function(req, res){
     
     let movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins'];
+
+   //  problem 2  
 
         // let arr = [] ;
         // for(let i=0; i<movies.length; i++){
@@ -89,34 +102,34 @@ router.get("/movies/:indexNumber", function(req, res){
         //  }
         //  res.send(arr)
 
-        //  Handle a scenario in problem 2 where if the index is greater than the valid maximum value a message
-        //   is returned that tells the user to use a valid index in an error message.
+   //  problem  3
 
-    //    function problem3(movies)
-    //    {
-    //     if(req.params.indexNumber <= movies.length)
-    //     {
-    //         let arr = [] ;
-    //        for(let i=0; i<movies.length; i++)
-    //        {
-    //         if(i  == req.params.indexNumber)
-    //         {
-    //             arr.push(movies[i])
-    //         }
-    //        }
-    //        return arr;
-    //     }
-//         else
-//         {
-//             return "Use valid index number"
-//         }
+       function problem3(movies)
+       {
+        if(req.params.indexNumber <= movies.length)
+        {
+            let arr = [] ;
+           for(let i=0; i<movies.length; i++)
+           {
+            if(i  == req.params.indexNumber)
+            {
+                arr.push(movies[i])
+            }
+           }
+           return arr;
+        }
+        else
+        {
+            return "Use valid index number"
+        }
 
-//        }
-//            const  result = problem3(movies)
-//             res.send(result)
-// })
-
+       }
+           const  result = problem3(movies)
+            res.send(result)
 })
+
+
+//     problem  4
 
 router.get("/films", function(req,res){
 
@@ -133,39 +146,16 @@ router.get("/films", function(req,res){
         'id': 4,
         'name': 'Finding Nemo'
        }]
-       
-
-    res.send(filmi)
+       res.send(filmi)
 }
 )  
 
-// Write api GET /films/:filmId where filmId is the value received in request path params.
-//  Use this value to return a movie object with this id. In case there is no such movie present in the array, 
-//  return a suitable message in the response body. Example for a request GET /films/3 should return the movie object 
-// {
-//  “id”: 3,
-//  “name”: “Rang de Basanti”
-// }
-// Similarly for a request GET /films/9 the response can be something like - ‘No movie exists with this id’
+//     problem 5
 
 router.get("/films/:filmId", function(req,res){
 
-    const movies = [ {
-        'id': 1,
-        'name': 'The Shining'
-       }, {
-        'id': 2,
-        'name': 'Incendies'
-       }, {
-        'id': 3,
-        'name': 'Rang de Basanti'
-       }, {
-        'id': 4,
-        'name': 'Finding Nemo'
-       }]
-
-    //    console.log(film[1]);
-    //    res.send("hello I will return an object.")
+    const movies = [ {'id': 1,'name': 'The Shining'}, {'id': 2,'name': 'Incendies'},
+                     {'id': 3,'name': 'Rang de Basanti'}, {'id': 4,'name': 'Finding Nemo'}]
 
 
     function searchMovies(movies){
@@ -179,8 +169,6 @@ router.get("/films/:filmId", function(req,res){
     }
     let b = searchMovies(movies)
     res.send(b)
-        
-    // console.log(movies[1].id)
 })
 
 module.exports = router;
