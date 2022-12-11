@@ -1,4 +1,4 @@
-const managerEmail = "akash@gmail.com"
+const managerEmail = "employee@gmail.com"
 
 
 const printManagerDetails= function() {

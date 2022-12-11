@@ -3,7 +3,7 @@ const greetPerson = function (person) {
     console.log(`Hi ${person}, how are you?`)
 }
 
-const personEmail = "sabiha@gmail.com"
+const personEmail = "gaurav108@gmail.com"
 
 
 module.exports.myEmail = personEmail
