@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router();  //  express.Router creates new router object for handling request
 
 router.get('/students/:name', function(req, res) {
     let studentName = req.params.name
@@ -133,7 +133,7 @@ router.get("/get-query-1", function(req, res) {
 // take marks in req.query in a variable named "marks" and send "pass" if marks>40 else send "fail"
 router.get( "/get-query-2", function (req, res){
     let marks= req.query.marks
-    let result = marks >40 ? "pass" : "fail"
+    let result = marks >= 40 ? "pass" : "fail"
     //ternary operator
     res.send( {data: result , status: true})
 })
@@ -160,4 +160,42 @@ router.post( "/post-query-2", function (req, res){
 })
 
 
+let persons= [
+    {
+    name: "PK",
+    age: 10,
+    votingStatus: false
+ },
+ {
+    name: "SK",
+    age: 20,
+    votingStatus: false
+ },
+ {
+    name: "AA",
+    age: 70,
+    votingStatus: false
+ },
+ {
+    name: "SC",
+    age: 5,
+    votingStatus: false
+ },
+ {
+    name: "HO",
+    age: 40,
+    votingStatus: false
+ }
+ ]
+ 
+router.post("/queryParamsVoting" , function(req,res){
+    let age = req.query.votingAge
+    for(let i=0; i<persons.length; i++){
+        if(persons[i].age >= age){
+            persons[i].votingStatus = true;
+        }
+    }
+    let canVote = persons.filter(iCanVote => iCanVote.votingStatus === true)
+    res.send(canVote)
+})
 module.exports = router;
