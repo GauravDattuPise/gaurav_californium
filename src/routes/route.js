@@ -97,7 +97,7 @@ let players =
         //      }
         //     }        
 
-        let exist = players.find(a => a.name === Name)
+        let exist = players.find(anything => anything.name === Name)
         if(exist){
             return res.send("Name already exists in array")
         }
