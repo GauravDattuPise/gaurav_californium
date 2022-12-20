@@ -3,21 +3,24 @@ const router = express.Router();
 // const UserModel= require("../models/userModel.js")
 const UserController= require("../controllers/userController")
 const BookController= require("../controllers/bookController")
+const authorController1 = require("../controllers/authorController1")
+const BookController1 = require("../controllers/bookController1")
+const Problems = require("../controllers/Problems")
 
 router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
 
-router.post("/createUser", UserController.createUser  )
+// router.post("/createUser", UserController.createUser  )
 
-router.get("/getUsersData", UserController.getUsersData)
+// router.get("/getUsersData", UserController.getUsersData)
 
-router.post("/createBook", BookController.createBook  )
+// router.post("/createBook", BookController.createBook  )
 
-router.get("/getBooksData", BookController.getBooksData)
+// router.get("/getBooksData", BookController.getBooksData)
 
-router.post("/updateBooks", BookController.updateBooks)
-router.post("/deleteBooks", BookController.deleteBooks)
+// router.post("/updateBooks", BookController.updateBooks)
+// router.post("/deleteBooks", BookController.deleteBooks)
 
 //MOMENT JS
 const moment = require('moment');
@@ -37,5 +40,11 @@ router.get("/dateManipulations", function (req, res) {
 
     res.send({ msg: "all good"})
 })
+
+router.post("/createAuthor", authorController1.createAuthor )
+router.post("/createBook", BookController1.createBook)
+router.get("/findBooks", Problems.findBooks)
+router.get("/findAuthor", Problems.findAuthor)
+router.get("/booksBetween", Problems.booksBetween)
 
 module.exports = router;
