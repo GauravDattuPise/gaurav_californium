@@ -21,6 +21,22 @@ app.use (
   }
   );
 
+  const globalMidd = function(req,res,next){
+    let currentDate = new Date();
+
+    let currentTime = currentDate.getDate()+(currentDate.getMonth()+1)+currentDate.getFullYear()+
+                      currentDate.getHours()+": "+currentDate.getMinutes()+": "+currentDate.getSeconds()
+    console.log(currentDate)
+
+    let ipAdd = req.ip
+    let url = req.originalUrl
+
+    console.log(ipAdd,url)
+    next()
+  }
+  
+  app.use(globalMidd)
+
 app.use('/', route);
 
 
