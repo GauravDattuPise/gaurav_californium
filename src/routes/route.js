@@ -8,8 +8,8 @@ router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
 
-router.post("/products", productController.createProduct)
-router.post("/users", userController.createUser)
-router.post("/orders", orderController.createOrder)
+router.post("/createProduct", productController.createProduct)
+router.post("/createUser", userController.createUser)
+router.post("/createOrder", orderController.createOrder)
 
 module.exports = router;
