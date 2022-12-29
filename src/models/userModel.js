@@ -27,4 +27,4 @@ const userSchema = new mongoose.Schema( {
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('myUser', userSchema)
+module.exports = mongoose.model('myUserTryCatch', userSchema)
