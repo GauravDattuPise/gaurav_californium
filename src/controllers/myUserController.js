@@ -1,14 +1,19 @@
 const userModel = require("../models/userModel")
 const jwt = require("jsonwebtoken");
-const {isValidObjectId} = require("mongoose");
+//const {isValidObjectId} = require("mongoose");
 
 const createUser = async function(req,res){
-    let data = req.body;
-    let savedData = await userModel.create(data)
-    res.send({status: true, msg : savedData})
+    try{
+        let data = req.body;
+        let savedData = await userModel.create(data)
+        res.status(200).send({status: true, msg : savedData})
+    }catch(err){
+         res.status(400).send({status :false, msg : "user info is wrong"})
+    }
 }
 
 const userLogin = async function(req,res){
+    try {
     let usrMail = req.body.emailId;
     let usrPW = req.body.password;
 
@@ -19,9 +24,12 @@ const userLogin = async function(req,res){
         userId : userCheck._id.toString(),
         name : "functionUp",
         Batch : "californium",
-    }, "I-am-trainee-at-FunctionUp",{expiresIn:"150m"})
+    }, "I-am-trainee-at-FunctionUp")
   res.setHeader("x-auth-token" ,createToken);
-  res.send({status :true, data : createToken});
+  res.status(200).send({status :true, data : createToken});
+}catch(err){
+   res.status(500).send(err.message)
+}
 }
 
 const getUser = async function(req,res){
@@ -37,7 +45,7 @@ try {
     //if(!isValidObjectId (userId)) return res.send({msg : "not a valid id"})
     let userDetails = await userModel.findById(userId)
     if(!userDetails) return res.send({status : false, msg : "userid is not exists"})
-    res.send({status : true , data : userDetails})
+    res.status(200).send({status : true , data : userDetails})
 
  }
  catch(err){
@@ -47,24 +55,49 @@ try {
 }
 
 const updatedUser = async function(req,res){
+   try {
     let para = req.params.userId 
     let data = req.body
     let result = await userModel.findByIdAndUpdate(para ,{$set : data}, {new : true})
    // console.log(result)
-    res.send({msg : result})
+    res.status(200).send({msg : result})
+}catch(err){
+    res.status(500).send(err.message)
+}
 }
 
 // Write a *DELETE api /users/:userId* that takes the userId in the path params and 
 //marks the isDeleted attribute for a user as true.
 const isDelet = async function(req,res){
-
+try {
     let para = req.params.userId 
 
     let result = await userModel.findByIdAndUpdate(para,{isDeleted : true}, {new : true})
    // console.log(result)
-    res.send(result)
+    res.status(200).send(result)
+}catch(err){
+    res.status(500).send(err.message)
+}
   
 }
+
+module.exports.postUpdate = async function(req,res){
+    try {
+    let msg = req.body.msg
+    let user = await userModel.findById(req.params.userId)
+    if(!user) return res.send({msg : "user not found"})
+
+    let updatePost = user.posts
+    updatePost.push(msg)
+
+    let updatedUser = await userModel.findByIdAndUpdate({_id : user._id } , {posts : updatePost}, {new :true})
+    return res.send({status : true, msg : updatedUser})
+}catch(err){
+    res.status(500).send(err.message)
+}
+}
+
+
 
 module.exports.createUser=createUser;
 module.exports.userLogin=userLogin;

@@ -29,4 +29,8 @@ router.put("/updatedUser/:userId" , myMiddleware.myMiddle, myUserController.upda
 
 router.delete("/isDelet/:userId", myMiddleware.myMiddle,myUserController.isDelet)
 
+// AUTHORIZATION
+
+router.post("/cretePost/:userId/posts", myMiddleware.myMiddle,myMiddleware.myMiddle2,myUserController.postUpdate)
+
 module.exports = router;
