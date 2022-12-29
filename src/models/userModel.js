@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema( {
         type : String,
         required : true
     },
-    posts : [],
+    posts : [],  // in authorization assignment
     gender: {
         type: String,
         enum: ["male", "female", "other"]

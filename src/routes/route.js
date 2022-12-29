@@ -17,8 +17,9 @@ router.get("/users/:userId",userController.getUserData)
 
 router.put("/users/:userId", userController.updateUser)
 
-// my code
+// MY CODE
 
+// AUTHENTICATION
 router.post("/createUser" , myUserController.createUser)   // for creating userDetails
 
 router.post("/userLogin" , myUserController.userLogin) // logIN with a valid userDetails
@@ -31,6 +32,6 @@ router.delete("/isDelet/:userId", myMiddleware.myMiddle,myUserController.isDelet
 
 // AUTHORIZATION
 
-router.post("/cretePost/:userId/posts", myMiddleware.myMiddle,myMiddleware.myMiddle2,myUserController.postUpdate)
+router.post("/createPost/:userId/posts", myMiddleware.myMiddle,myMiddleware.myMiddle2,myUserController.postUpdate)
 
 module.exports = router;
