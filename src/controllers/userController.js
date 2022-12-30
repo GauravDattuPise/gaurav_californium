@@ -4,7 +4,7 @@ const createUser= async function (req, res) {
     let appHeader = req.headers["isFreeAppUser"]
     if(!appHeader) appHeader = req.headers["isfreeappuser"]
 
-    if(!appHeader) return res.send({status: false, message:"The mandatory header is not present"})
+    if(!appHeader) return res.send({status: false, message:"The header is mandatory"})
 
     console.log("request header is", appHeader)
     
