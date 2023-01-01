@@ -1,54 +1,39 @@
-const orderModel = require("../models/orderModel")
-const userModel = require("../models/userModel")
-const productModel = require("../models/productModel")
+const orderModel = require('../models/orderModel');
+const productModel = require('../models/productModel');
+const userModel = require('../models/userModel');
 
-const createOrder= async function (req, res) {
-    // check header exists or not
-    let appHeader = req.headers["isFreeAppUser"]
-    if(!appHeader) appHeader = req.headers["isfreeappuser"]
+const placeOrder = async (req,res) => {
 
-    if(!appHeader) return res.send({status: false, message:"The header is not present."})
+    let data = req.body;
 
-   // console.log("request header is", appHeader)
-    
-    let data= req.body
+    // is user exists
+    let checkUser = await userModel.findById(data.userId)
+    if(!checkUser) return res.send({msg : "user does't exists"})
 
-    if(appHeader == 'true') {
-        data.isFreeAppUser = true
-    } else {
-        data.isFreeAppUser = false
+    // is product exists
+    let checkProduct = await productModel.findById(data.productId)
+    if(!checkProduct) return res.send({msg : "product doesn't exists"})
+
+    //  if user is free app user then order without deducting balance
+    if(data.isFreeAppUser == true){
+        const savedData = await orderModel.create(data)
+    res.send({msg : savedData})
     }
 
-    //User exists or not
-    let user = await userModel.findById(data.userId)
-    if(!user) return res.send({status : false, message: "User not found"})
-
-    // product exists or not
-    let product = await productModel.findById(data.productId)
-    if(!product) return res.send({status: false, message: "Product not found"})
-
-    //  If user is freeappuser then we will not deduct his balance
-    if(appHeader == 'true') {
-        data.amount = 0
-        let savedData= await orderModel.create(data)
-        return res.send({status: true, data: savedData})
+    // check user balance as well as product price
+    if(data.isFreeAppUser == false){
+           if(checkProduct.price > checkUser.balance){
+            return res.send({msg : "you don't have enough balance"})
+           }
+           else{
+            data.amount = checkProduct.price;
+            let updateData = await userModel.findByIdAndUpdate(checkUser._id, {balance : (checkUser.balance - checkProduct.price)},{new : true})
+            
+            const savedData = await orderModel.create(data)
+            res.send({msg : savedData})
+           }
     }
-
-    // If user is paid user then check his balance .
-    if(appHeader != 'true') {
-        if(user.balance < product.price) {
-            return res.send({staus: false, message: "user doesn't jave enough balance"})
-        } else {
-            // if user balance is more than product price then we have to order product
-            // and deduct balance = ( of user - product price)
-            data.amount = product.price
-            let savedData= await orderModel.create(data)
-            await userModel.findOneAndUpdate({_id:data.userId}, {balance:user.balance - product.price})
-            return res.send({status: true, data: savedData})
-        }
-    }
-
 
 }
 
-module.exports.createOrder = createOrder
+module.exports.placeOrder = placeOrder

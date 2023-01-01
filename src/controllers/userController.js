@@ -1,23 +1,12 @@
-const userModel= require("../models/userModel")
+const userModel = require('../models/userModel')
 
-const createUser= async function (req, res) {
-    let appHeader = req.headers["isFreeAppUser"]
-    if(!appHeader) appHeader = req.headers["isfreeappuser"]
-
-    if(!appHeader) return res.send({status: false, message:"The header is mandatory"})
-
-    console.log("request header is", appHeader)
-    
-    let data= req.body
-
-    if(appHeader == 'true') {
-        data.isFreeAppUser = true
-    } else {
-        data.isFreeAppUser = false
-    }
-
-    let savedData= await userModel.create(data)
-    res.send({status: true, data: savedData})
+const createUser = async function(req,res){
+  
+     let data = req.body
+    const savedData = await userModel.create(data);
+    res.send({msg : savedData})
 }
 
-module.exports.createUser= createUser
+
+
+module.exports.createUser = createUser
