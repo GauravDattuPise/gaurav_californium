@@ -71,14 +71,5 @@ const authLogin = async function (req, res) {
 
 
 
-
-
-
-
-
-
-
-
-
 module.exports.createAuthor = createAuthor;
 module.exports.authLogin = authLogin;
