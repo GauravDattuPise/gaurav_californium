@@ -33,5 +33,4 @@ router.delete("/blogs/:blogsId",MW.authentication,MW.authorization,blogControlle
 router.delete("/blogs",MW.authentication,MW.authorization,blogController.deleteBlogByQuery)
 
 
-
 module.exports=router;
