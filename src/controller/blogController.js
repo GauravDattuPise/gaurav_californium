@@ -14,8 +14,8 @@ const createBlog = async function (req, res) {
             return res.status(400).send({ status: false, msg: "invalid author id" })
         }
 
-        if(req.headers.loggedUserId != authorId){
-            return res.status(400).send({status:false,msg:"please provide your own author id not any another"})
+        if (req.headers.loggedUserId != authorId) {
+            return res.status(400).send({ status: false, msg: "please provide your own author id not any another" })
         }
 
         let checkAuthor = await authorModel.findById(authorId)
@@ -56,14 +56,14 @@ const getBlogsData = async function (req, res) {
                 return res.status(200).send({ status: true, msg: data })
             }
         }
-        
-        qparams.isDeleted=false
-        qparams.isPublished=true
+
+        qparams.isDeleted = false
+        qparams.isPublished = true
         let data = await blogsModel.find(qparams).populate("authorId", { fname: 1, lname: 1, title: 1, _id: 0 })
-        if(data.length!=0){
-            return res.status(200).send({status:true,msg:data})
+        if (data.length != 0) {
+            return res.status(200).send({ status: true, msg: data })
         }
-        return res.status(404).send({status:false,msg:"no data found"})
+        return res.status(404).send({ status: false, msg: "no data found" })
     }
     catch (err) {
         res.status(500).send({ status: false, msg: "internal server error" })
@@ -78,7 +78,6 @@ const updateBlog = async function (req, res) {
 
         let data = req.body
         let BlogId = req.params.blogsId
-
 
 
         //------------------------- Destructuring Data from Body -------------------------//
@@ -153,24 +152,24 @@ const deleteBlog = async function (req, res) {
 const deleteBlogByQuery = async function (req, res) {
     try {
         let loggedUserId = req.headers["loggedUserId"]
-        let qparams=req.query;
-        if(Object.keys(qparams).length==0){
-            return res.status(400).send({status:false,msg:"please provide some query data"})
+        let qparams = req.query;
+        if (Object.keys(qparams).length == 0) {
+            return res.status(400).send({ status: false, msg: "please provide some query data" })
         }
-        const {category, authorId, tags, subcategory,isPublished}=req.query;
-        if(!(category || authorId || tags || subcategory || isPublished)){
-            return res.status(400).send({status:false,msg:"please provide some necessary query data"})
+        const { category, authorId, tags, subcategory, isPublished } = req.query;
+        if (!(category || authorId || tags || subcategory || isPublished)) {
+            return res.status(400).send({ status: false, msg: "please provide some necessary query data" })
         }
-        if(!qparams.authorId){
-            qparams.authorId=loggedUserId
+        if (!qparams.authorId) {
+            qparams.authorId = loggedUserId
         }
-        qparams.isDeleted=false;
-        let deletedData=await blogsModel.updateMany(qparams,{isDeleted:true})
-        let deletedCount=deletedData.modifiedCount;
-        if(deletedCount != 0){
-            return res.status(200).send({status:true,msg:`deleted ${deletedCount} blog`})
+        qparams.isDeleted = false;
+        let deletedData = await blogsModel.updateMany(qparams, { isDeleted: true })
+        let deletedCount = deletedData.modifiedCount;
+        if (deletedCount != 0) {
+            return res.status(200).send({ status: true, msg: `deleted ${deletedCount} blog` })
         }
-        
+
         return res.status(404).send({ status: false, msg: "no data is found to be deleted" })
     }
     catch (err) {
@@ -184,3 +183,5 @@ module.exports.getBlogsData = getBlogsData
 module.exports.updateBlog = updateBlog
 module.exports.deleteBlog = deleteBlog
 module.exports.deleteBlogByQuery = deleteBlogByQuery
+
+

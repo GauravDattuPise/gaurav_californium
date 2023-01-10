@@ -13,11 +13,11 @@ router.post("/login",authorController.authLogin)
 
 //============================================================== CREATING BLOGS API====================================
 
-router.post("/blogs",MW.authentication,blogController.createBlog)
+router.post("/blogs",MW.authentication,blogController.createBlog1)
 
 //======================================================get API========================
 
-router.get("/blogs",MW.authentication, blogController.getBlogsData)
+router.get("/blogs",MW.authentication, blogController.getBlogsData1)
 
 
 //========================================== Update API =========================================
